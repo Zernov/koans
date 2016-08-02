@@ -15,20 +15,34 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
-	sides = [a, b, c].sort
-	if (sides[0] <= 0) 
-		raise TriangleError
+	sides = [a, b, c]
+	sides.each { |side| raise TriangleError if side < 0 }
+
+	sides.sort!
+	raise TriangleError if sides.last * 2 > sides.inject(0, :+)
+
+	return case sides.length - sides.uniq.length
+	when 0
+		:scalene
+	when 1
+		:isosceles
+	when 2
+		:equilateral
 	end
-	if (sides[2] >= sides[0] + sides[1]) 
-		raise TriangleError
-	end
-	if (sides[0] == sides[1] && sides[1] == sides[2])
-		return :equilateral
-	end
-	if (sides[0] == sides[1] || sides[1] == sides[2])
-		return :isosceles	
-	end
-	return :scalene
+
+#	if (sides[0] <= 0)
+#		raise TriangleError
+#	end
+#	if (sides[2] >= sides[0] + sides[1])
+#		raise TriangleError
+#	end
+#	if (sides[0] == sides[1] && sides[1] == sides[2])
+#		return :equilateral
+#	end
+#	if (sides[0] == sides[1] || sides[1] == sides[2])
+#		return :isosceles
+#	end
+#	return :scalene
 end
 
 # Error class used in part 2.  No need to change this code.

@@ -18,15 +18,14 @@ def triangle(a, b, c)
 	sides = [a, b, c]
 	sides.each { |side| raise TriangleError if side < 0 }
 
-	sides.sort!
-	raise TriangleError if sides.last * 2 >= sides.inject(0, :+)
+	raise TriangleError if sides.sort.reverse.inject(:-) >= 0
 
-	return case sides.length - sides.uniq.length
-	when 0
+	return case sides.uniq.length
+	when 3
 		:scalene
-	when 1
-		:isosceles
 	when 2
+		:isosceles
+	when 1
 		:equilateral
 	end
 

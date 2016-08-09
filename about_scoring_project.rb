@@ -31,14 +31,18 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
-	return 0 if dice == []
-	stats = dice.each_with_object(Hash.new(0)) { |e, h| h[e] += 1 }
+
 	score = 0
+	stats = dice.each_with_object(Hash.new(0)) { |e, h| h[e] += 1 }
 
 	stats.each do |key, value|
-		score += value / 3 * 100 * key
-		score += value / 3 * 900 + value % 3 * 100 if key == 1
-		score += value % 3 * 50 if key == 5
+		if value >= 3
+			value -= 3
+			score += 1000 if key == 1
+			score += 100 * key if key != 1
+		end
+		score += 100 * value if key == 1
+		score += 50 * value if key == 5
 	end
 	score
 end

@@ -13,9 +13,8 @@
 # and
 #   about_triangle_project_2.rb
 #
-def triangle(a, b, c)
+def triangle(*sides)
   # WRITE THIS CODE
-	sides = [a, b, c]
 	sides.each { |side| raise TriangleError if side < 0 }
 
 	raise TriangleError if sides.sort.reverse.inject(:-) >= 0

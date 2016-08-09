@@ -33,16 +33,16 @@ def score(dice)
   # You need to write this method
 
 	score = 0
-	stats = dice.each_with_object(Hash.new(0)) { |e, h| h[e] += 1 }
 
-	stats.each do |key, value|
-		if value >= 3
-			value -= 3
-			score += 1000 if key == 1
-			score += 100 * key if key != 1
+	dice.uniq.each do |value|
+		count = dice.count(value)
+		threes = count / 3
+		ones = count % 3
+		score += case value
+		when 1 then (threes * 10 + ones) * 100
+		when 5 then (threes * 10 + ones) * 50
+		else threes * value * 100
 		end
-		score += 100 * value if key == 1
-		score += 50 * value if key == 5
 	end
 	score
 end
